@@ -13,11 +13,12 @@ import { useProject } from "~/hooks/use-project";
 import { api } from "~/trpc/react";
 import AskQuestionCard from "../dashboard/ask-question-card";
 import CodeReferences from "../dashboard/code-references";
+import Skeleton from "~/components/skeleton";
 
 
 const QAPage = () => {
   const { projectId } = useProject();
-  const { data: questions } = api.project.getQuestions.useQuery({ projectId });
+  const { data: questions, isPending } = api.project.getQuestions.useQuery({ projectId });
   const [questionIndex, setQuestionIndex] = useState<number>(0);
   const question = questions?.[questionIndex];
 
@@ -28,6 +29,7 @@ const QAPage = () => {
       <h1 className="text-xl font-semibold">Saved Questions</h1>
       <div className="h-2"></div>
       <div className="flex flex-col gap-2">
+        {isPending && <Skeleton showButtons={false} />}
         {questions?.map((question, index) => {
           return (
             <div key={question.id}>

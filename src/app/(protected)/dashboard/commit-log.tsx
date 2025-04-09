@@ -3,16 +3,21 @@
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import Skeleton from "~/components/skeleton";
 import { useProject } from "~/hooks/use-project";
 import { cn } from "~/lib/utils";
 import { api } from "~/trpc/react";
 
 const CommitLog = () => {
   const { projectId, project } = useProject();
-  const { data: commits } = api.project.getCommits.useQuery({ projectId });
+  const { data: commits, isPending } = api.project.getCommits.useQuery({ projectId });
   return (
     <>
       <ul className="space-y-6">
+        {isPending && <div className="flex flex-col gap-3">
+            <Skeleton showButtons={false} />
+            <Skeleton showButtons={false} />
+          </div>}
         {commits?.map((commit, commitIndex) => {
           return (
             <li key={commit.id} className="relative flex gap-x-4">

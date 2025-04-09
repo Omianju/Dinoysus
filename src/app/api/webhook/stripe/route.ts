@@ -13,7 +13,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 
 
-export async function POST(req: NextRequest, res : NextResponse ) {
+export async function POST(req: NextRequest) {
     const body = await req.text()
     const signature = (await headers()).get("Stripe-Signature") as string
     let event : Stripe.Event;
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest, res : NextResponse ) {
     try {
         event = stripe.webhooks.constructEvent(body, signature, process.env.STRIPE_WEBHOOK_SECRET!)
     } catch (error) {
-        return NextResponse.json({error : "Invalid Signature"}, {status : 400})
+        return NextResponse.json({error : "Invalid Signature"}, {status : 401})
     }
 
     const session = event.data.object as Stripe.Checkout.Session
