@@ -26,7 +26,7 @@ const HomePage = async () => {
         </p>
         <div className="space-x-4">
           <Button>
-            <Link href="/sign-up">Get Started</Link>
+            <Link href="/sign-in">Get Started</Link>
           </Button>
           <Link
             target="_blank"
@@ -80,7 +80,7 @@ const HomePage = async () => {
           <Link href="/sign-in" className="text-sm hover:underline">
             Sign In
           </Link>
-          <Link href="/sign-up" className="text-sm hover:underline">
+          <Link href="/sign-in" className="text-sm hover:underline">
             Sign Up
           </Link>
         </div>
